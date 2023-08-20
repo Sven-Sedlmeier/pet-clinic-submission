@@ -18,20 +18,16 @@
 
 ### Add Git action step to compile the code and run the tests [here](.github/workflows/maven-compile-test.yml)
 
-### Generate new Dockerfile [here] (dockerfile.yml)
+### Generate new Dockerfile [here](dockerfile.yml)
 
 ### Generate credentials for jFrog and add to Github
 
-### Add Docker build image and publish [here] (.github/workflows/build-publish-docker-image.yml)
+### Remove custom repositories from pom.xml
 
-### Remove custom repositories
+### Add Docker build image and publish [here](.github/workflows/build-publish-docker-image.yml)
 
-### Push Docker image to jFrog Artefactory
-
-
-
-
-
+### Use jFrog CLI to scan image locally
+Execute "jf scan" locally 
 
 # Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
 
