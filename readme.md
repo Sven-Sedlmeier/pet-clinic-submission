@@ -21,7 +21,7 @@
 ### Generate new Dockerfile [here](dockerfile.yml)
 
 ### Generate credentials for jFrog and add to Github
-
+Add JF_URL and JF_TOKEN
 ### Remove custom repositories from pom.xml
 
 ### Add Docker build image and publish [here](.github/workflows/build-publish-docker-image.yml)
