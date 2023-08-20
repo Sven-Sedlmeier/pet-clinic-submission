@@ -25,7 +25,7 @@ jobs:
 
           - name: Build Tag and push Docker Image
             env:
-              IMAGE_NAME: sventest.jfrog.io/docker/jfrog-docker-example-image:${{ github.run_number }}
+              IMAGE_NAME: sventest.jfrog.io/docker/petclinic-sven:${{ github.run_number }}
             run: |
               jf docker build -f ./dockerfile.yml -t $IMAGE_NAME .
               jf docker push $IMAGE_NAME
